@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre-commit-pygrep-txt"
+version = "1.0.1"
+description = """
+tool for pre-commit hooks: grep-like finder using Python regexes, \
+operating on bytes by default or decoded codepoints with --encoding.\
+"""
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+# PyPI web rendering glitches a lot when a email address is not present
+authors = [
+    { name = "Viacheslav Syropiatov", email = "nonexistent@example.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.urls]
+source = "https://github.com/asrelo/pre-commit-pygrep-txt"
+
+[project.scripts]
+pre-commit-pygrep-txt = "pre_commit_pygrep_txt.main:main"
+
+[dependency-groups]
+dev = ["pytest>=9"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.pycodestyle]
+ignore = ["E265", "E501", "W504"]
+
+[tool.mypy]
+mypy_path = "src"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+enable_error_code = ["deprecated"]
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false

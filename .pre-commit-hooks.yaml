@@ -1,0 +1,8 @@
+- id: pygrep-txt
+  name: pygrep-txt
+  description: >
+    grep bytes or codepoints for problematic patterns
+    (to grep codepoints, use the option `--encoding`)
+  entry: pre-commit-pygrep-txt
+  language: python
+  types: [text]
