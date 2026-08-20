@@ -1,0 +1,29 @@
+name: Build Python package
+description: Build and validate source and wheel distributions
+
+inputs:
+  dist-dir:
+    description: Directory for built distributions
+    required: false
+    default: "dist/"
+  do-clean:
+    description: Remove existing distribution artifacts first
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Install build tools
+      shell: bash
+      run: "python -m pip install build twine"
+    - name: Clean stale distributions
+      if: "inputs.do-clean == 'true'"
+      shell: bash
+      run: "rm -rf '${{ inputs.dist-dir }}'"
+    - name: Build distributions
+      shell: bash
+      run: "python -m build --outdir '${{ inputs.dist-dir }}'"
+    - name: Validate distributions
+      shell: bash
+      run: "python -m twine check \"${{ inputs.dist-dir }}\"/*"
